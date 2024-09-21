@@ -8,7 +8,7 @@
 
    a. Please complete the searchProducts fetch function and the typescript Type according to the documentation. It should be able to return filtered results based on a search string. If the string is empty, all Products should be returned. Either use the fetch API or install axios, whichever you are more comfortable using.
 
-   b. There is a function in **_src/functions/addRetries.ts_** which adds retries to async functions. The typing is currently suboptimal, resulting in the return type as `Promise<any>` and typescript issues when it is used. It should accept any callback, the only constraint is that the callback should re asynchronous.
+   b. There is a function in **_src/functions/addRetries.ts_** which adds retries to async functions. The typing is currently suboptimal, resulting in the return type as `Promise<any>` and typescript issues when it is used. It should accept any callback, the only constraint is that the callback should e asynchronous.
 
    c. Create some tests for the addRetries function
 
