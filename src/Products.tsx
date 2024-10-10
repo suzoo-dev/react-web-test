@@ -22,7 +22,18 @@ const Products = observer(() => {
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Products</h1>
-      <input type="text" onChange={handleSearch} value={inputValue} />
+      <input
+        type="text"
+        onChange={handleSearch}
+        value={inputValue}
+        style={{
+          padding: "10px",
+          border: "1px solid #ccc",
+          fontSize: "16px",
+          outline: "none",
+          borderRadius: "5px",
+        }}
+      />
       <div
         style={{
           display: "flex",
