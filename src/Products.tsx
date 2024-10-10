@@ -1,23 +1,28 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { observer } from "mobx-react-lite";
+import productStore from "./stores/ProductStore";
 import { searchProducts } from "./functions/searchProducts";
 
-function Products() {
-  const [searchTerm] = useState<string>("");
+const Products = observer(() => {
+  const { searchTerm, setSearchTerm, products } = productStore;
 
-  const { data, isLoading, isError } = useQuery({
+  const { isLoading, isError } = useQuery({
     queryKey: ["products", searchTerm],
     queryFn: () => searchProducts(searchTerm),
     retry: false,
   });
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error</p>;
-  console.log("data", data);
 
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Products</h1>
+      <input type="text" onChange={handleSearch} value={searchTerm} />
       <div
         style={{
           display: "flex",
@@ -28,7 +33,7 @@ function Products() {
         }}
       >
         <ul>
-          {data?.products.map((product) => (
+          {products.map((product) => (
             <li
               key={product.id}
               style={{ borderBottom: "1px solid #ccc", margin: "10px" }}
@@ -41,6 +46,6 @@ function Products() {
       </div>
     </div>
   );
-}
+});
 
 export default Products;

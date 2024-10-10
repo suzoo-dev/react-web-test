@@ -1,4 +1,5 @@
 import { ProductsResponse } from "./products";
+import productStore from "../stores/ProductStore";
 
 export const searchProducts = async (
   searchTerm: string
@@ -6,6 +7,7 @@ export const searchProducts = async (
   const res = await fetch(
     `https://dummyjson.com/products${searchTerm && "/search?q=" + searchTerm}`
   );
-  const data = res.json();
+  const data = await res.json();
+  productStore.setProducts(data.products);
   return data;
 };
