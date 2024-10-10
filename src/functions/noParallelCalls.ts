@@ -9,8 +9,18 @@ export const dangerousFunction = async () => {
   return { message: `Success at ${new Date().toISOString()}` };
 };
 
-export const noParallelCalls = async <T extends () => Promise<unknown>>(
-  dangerousCallBack: T
-) => {
-  return await dangerousCallBack();
+export const noParallelCalls = (callbackFn: () => Promise<any>) => {
+  let activePromise: Promise<any> | null = null;
+
+  return async () => {
+    if (activePromise) {
+      return activePromise;
+    }
+
+    activePromise = callbackFn().finally(() => {
+      activePromise = null;
+    });
+
+    return activePromise;
+  };
 };
