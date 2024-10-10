@@ -5,6 +5,7 @@ import { Product } from "../functions/products";
 class ProductStore {
   inputValue: string = "";
   searchTerm: string = "";
+  isSearching: boolean = false;
   products: Product[] = [];
 
   constructor() {
@@ -15,6 +16,7 @@ class ProductStore {
   setInputValue = (value: string) => {
     this.inputValue = value;
     this.setSearchTerm(value);
+    this.isSearching = true;
   };
 
   setSearchTerm = (value: string) => {
@@ -23,6 +25,7 @@ class ProductStore {
 
   setProducts = (products: Product[]) => {
     this.products = products;
+    this.isSearching = false;
   };
 }
 

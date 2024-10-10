@@ -4,9 +4,10 @@ import productStore from "./stores/ProductStore";
 import { searchProducts } from "./functions/searchProducts";
 
 const Products = observer(() => {
-  const { inputValue, setInputValue, searchTerm, products } = productStore;
+  const { inputValue, setInputValue, isSearching, searchTerm, products } =
+    productStore;
 
-  const { isLoading, isError } = useQuery({
+  const { isLoading, isFetching, isError } = useQuery({
     queryKey: ["products", searchTerm],
     queryFn: () => searchProducts(searchTerm),
     retry: false,
@@ -16,7 +17,10 @@ const Products = observer(() => {
     setInputValue(e.target.value);
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  const clearSearch = () => {
+    setInputValue("");
+  };
+
   if (isError) return <p>Error</p>;
 
   return (
@@ -27,6 +31,7 @@ const Products = observer(() => {
         onChange={handleSearch}
         value={inputValue}
         style={{
+          margin: "10px",
           padding: "10px",
           border: "1px solid #ccc",
           fontSize: "16px",
@@ -34,6 +39,10 @@ const Products = observer(() => {
           borderRadius: "5px",
         }}
       />
+      {(isLoading || isFetching || isSearching) && <span>...</span>}
+      <button style={{ margin: "10px" }} onClick={clearSearch}>
+        Clear
+      </button>
       <div
         style={{
           display: "flex",
