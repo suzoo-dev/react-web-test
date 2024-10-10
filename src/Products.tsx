@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
 import productStore from "./stores/ProductStore";
 import { searchProducts } from "./functions/searchProducts";
+import { addRetries } from "./functions/addRetries";
 
 const Products = observer(() => {
   const { inputValue, setInputValue, isSearching, searchTerm, products } =
@@ -9,7 +10,7 @@ const Products = observer(() => {
 
   const { isLoading, isFetching, isError } = useQuery({
     queryKey: ["products", searchTerm],
-    queryFn: () => searchProducts(searchTerm),
+    queryFn: () => addRetries(searchProducts)(searchTerm),
     retry: false,
   });
 
