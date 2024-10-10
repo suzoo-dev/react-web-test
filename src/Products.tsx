@@ -4,7 +4,7 @@ import productStore from "./stores/ProductStore";
 import { searchProducts } from "./functions/searchProducts";
 
 const Products = observer(() => {
-  const { searchTerm, setSearchTerm, products } = productStore;
+  const { inputValue, setInputValue, searchTerm, products } = productStore;
 
   const { isLoading, isError } = useQuery({
     queryKey: ["products", searchTerm],
@@ -13,7 +13,7 @@ const Products = observer(() => {
   });
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+    setInputValue(e.target.value);
   };
 
   if (isLoading) return <p>Loading...</p>;
@@ -22,7 +22,7 @@ const Products = observer(() => {
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Products</h1>
-      <input type="text" onChange={handleSearch} value={searchTerm} />
+      <input type="text" onChange={handleSearch} value={inputValue} />
       <div
         style={{
           display: "flex",

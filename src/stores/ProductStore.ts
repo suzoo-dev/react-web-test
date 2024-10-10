@@ -3,6 +3,7 @@ import { debounce } from "lodash";
 import { Product } from "../functions/products";
 
 class ProductStore {
+  inputValue: string = "";
   searchTerm: string = "";
   products: Product[] = [];
 
@@ -11,13 +12,18 @@ class ProductStore {
     this.setSearchTerm = debounce(this.setSearchTerm.bind(this), 800);
   }
 
-  setSearchTerm(value: string) {
-    this.searchTerm = value;
-  }
+  setInputValue = (value: string) => {
+    this.inputValue = value;
+    this.setSearchTerm(value);
+  };
 
-  setProducts(products: Product[]) {
+  setSearchTerm = (value: string) => {
+    this.searchTerm = value;
+  };
+
+  setProducts = (products: Product[]) => {
     this.products = products;
-  }
+  };
 }
 
 const productStore = new ProductStore();
