@@ -1,11 +1,11 @@
 import { sleep } from "./sleep";
 
-type AsyncCallback<T extends unknown[]> = (...args: T) => Promise<unknown>;
+type AsyncCallback<T extends unknown[], R> = (...args: T) => Promise<R>;
 
-export function addRetries<T extends unknown[]>(
-  callbackToRetry: AsyncCallback<T>
-): AsyncCallback<T> {
-  return async (...args: T): Promise<unknown> => {
+export function addRetries<T extends unknown[], R>(
+  callbackToRetry: AsyncCallback<T, R>
+): AsyncCallback<T, R> {
+  return async (...args: T): Promise<R> => {
     let retryCount = 0;
     let newError: unknown;
 
